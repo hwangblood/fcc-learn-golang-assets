@@ -1,7 +1,5 @@
 {
   "question": "Does Go generally execute faster than Rust?",
-  "answers": [
-    "No",
-    "Yes"
-  ]
+  "answers": ["No", "Yes"],
+  "result": "No"
 }

@@ -1,7 +1,5 @@
 {
   "question": "Do users of compiled programs need access to source code?",
-  "answers": [
-    "No",
-    "Yes"
-  ]
+  "answers": ["No", "Yes"],
+  "result": "No"
 }

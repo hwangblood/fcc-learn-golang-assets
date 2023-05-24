@@ -5,5 +5,6 @@
     "faster, slower",
     "slower, faster",
     "slower, slower"
-  ]
+  ],
+  "result": "faster, faster"
 }

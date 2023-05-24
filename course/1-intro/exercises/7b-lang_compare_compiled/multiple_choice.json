@@ -5,5 +5,6 @@
     "Compiled code is faster",
     "Compiled code is more memory efficient",
     "Because docker exists"
-  ]
+  ],
+  "result": "There are no runtime language dependencies"
 }
