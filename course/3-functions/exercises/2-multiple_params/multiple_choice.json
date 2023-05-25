@@ -3,5 +3,6 @@
   "answers": [
     "func createUser(firstName, lastName string, age int)",
     "func createUser(firstName string, lastName string, age int)"
-  ]
+  ],
+  "result": "func createUser(firstName, lastName string, age int)"
 }

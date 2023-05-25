@@ -5,5 +5,6 @@
     "A function named 'f' that takes an int as the argument and returns an int",
     "A function named 'f' that takes a function as the argument and returns an int",
     "A function named 'f' that takes a function and an int as arguments and returns a function"
-  ]
+  ],
+  "result": "A function named 'f' that takes a function and an int as arguments and returns an int"
 }
