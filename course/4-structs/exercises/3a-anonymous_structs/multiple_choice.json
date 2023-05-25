@@ -4,5 +4,6 @@
     "Anonymous structs prevent you from re-using a struct definition you never intended to re-use",
     "Anonymous structs make your code run faster",
     "Anonymous structs can be compiled more quickly"
-  ]
+  ],
+  "result": "Anonymous structs prevent you from re-using a struct definition you never intended to re-use"
 }
