@@ -5,11 +5,16 @@ import (
 )
 
 func (e email) cost() float64 {
-	// ?
+	characterCount := float64(len(e.body))
+	if !e.isSubscribed {
+		return characterCount * .05
+	} else {
+		return characterCount * .01
+	}
 }
 
 func (e email) print() {
-	// ?
+	fmt.Println(e.body)
 }
 
 // don't touch below this line

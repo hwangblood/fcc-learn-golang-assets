@@ -1,8 +1,5 @@
 {
   "question": "Interfaces should have as _ methods as possible",
-  "answers": [
-    "Few",
-    "Many",
-    "Complex"
-  ]
+  "answers": ["Few", "Many", "Complex"],
+  "result": "Few"
 }

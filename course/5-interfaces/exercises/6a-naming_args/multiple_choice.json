@@ -1,8 +1,5 @@
 {
   "question": "Why would you name your interface's method's parameters?",
-  "answers": [
-    "Readability and clarity",
-    "Execution speed",
-    "Memory savings"
-  ]
+  "answers": ["Readability and clarity", "Execution speed", "Memory savings"],
+  "result": "Readability and clarity"
 }

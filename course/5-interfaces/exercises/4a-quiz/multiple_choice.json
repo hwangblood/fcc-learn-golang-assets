@@ -1,9 +1,5 @@
 {
   "question": "In the example given, the ____ type implements the ____ interface",
-  "answers": [
-    "circle, shape",
-    "shape, circle",
-    "circle, area",
-    "shape, area"
-  ]
+  "answers": ["circle, shape", "shape, circle", "circle, area", "shape, area"],
+  "result": "circle, shape"
 }

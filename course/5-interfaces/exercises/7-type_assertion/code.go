@@ -5,7 +5,17 @@ import (
 )
 
 func getExpenseReport(e expense) (string, float64) {
-	// ?
+	// both email and sms structs are implemented expense, so e.cost() will be fine
+	em, ok := e.(email)
+	if ok {
+		return em.toAddress, e.cost()
+	}
+	sm, ok := e.(sms)
+	if ok {
+		return sm.toPhoneNumber, e.cost()
+	}
+
+	return "", 0
 }
 
 // don't touch below this line
