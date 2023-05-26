@@ -1,11 +1,23 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 )
 
 func getUserMap(names []string, phoneNumbers []int) (map[string]user, error) {
-	// ?
+	// * check if names and phoneNumbers are valid, they should have the same length
+	if len(names) != len(phoneNumbers) {
+		return nil, errors.New("invalid sizes")
+	}
+
+	// * carete an empty map
+	userMap := make(map[string]user)
+	// userMap := map[string]user{}
+	for i, name := range names {
+		userMap[name] = user{name: name, phoneNumber: phoneNumbers[i]}
+	}
+	return userMap, nil
 }
 
 // don't touch below this line
