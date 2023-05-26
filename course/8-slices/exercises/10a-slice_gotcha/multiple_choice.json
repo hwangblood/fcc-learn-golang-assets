@@ -3,5 +3,6 @@
   "answers": [
     "The array's cap() is exceeded so a new underlying array is allocated",
     "Because there are fewer elements and Go's runtime can't handle more than ~8"
-  ]
+  ],
+  "result": "The array's cap() is exceeded so a new underlying array is allocated"
 }

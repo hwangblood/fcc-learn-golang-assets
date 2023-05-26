@@ -4,5 +4,6 @@
     "j and g point to the same underlying array so g's append overwrote j",
     "The Go team be trollin'",
     "Because append only works properly when the number of elements is < 10"
-  ]
+  ],
+  "result": "j and g point to the same underlying array so g's append overwrote j"
 }

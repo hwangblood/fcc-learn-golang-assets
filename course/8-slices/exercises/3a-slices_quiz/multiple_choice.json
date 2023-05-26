@@ -1,7 +1,5 @@
 {
   "question": "Multiple slices can point to the same array",
-  "answers": [
-    "True",
-    "False"
-  ]
+  "answers": ["True", "False"],
+  "result": "True"
 }

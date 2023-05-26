@@ -3,7 +3,17 @@ package main
 import "fmt"
 
 func createMatrix(rows, cols int) [][]int {
-	// ?
+	// * create a 2d slice with 0 length in two ways
+	matrix := make([][]int, 0)
+	// matrix := [][]int{}
+	for i := 0; i < rows; i++ {
+		row := []int{}
+		for j := 0; j < cols; j++ {
+			row = append(row, i*j)
+		}
+		matrix = append(matrix, row)
+	}
+	return matrix
 }
 
 // dont edit below this line
