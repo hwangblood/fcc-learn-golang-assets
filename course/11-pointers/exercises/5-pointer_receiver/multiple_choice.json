@@ -1,7 +1,5 @@
 {
   "question": "Which is more widely used in Go?",
-  "answers": [
-    "Pointer receivers",
-    "Value receivers"
-  ]
+  "answers": ["Pointer receivers", "Value receivers"],
+  "result": "Pointer receivers"
 }

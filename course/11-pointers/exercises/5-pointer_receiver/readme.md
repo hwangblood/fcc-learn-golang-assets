@@ -2,7 +2,7 @@
 
 A receiver type on a method can be a pointer.
 
-Methods with pointer receivers can modify the value to which the receiver points. Since methods often need to modify their receiver, pointer receivers are *more common* than value receivers.
+Methods with pointer receivers can modify the value to which the receiver points. Since methods often need to modify their receiver, pointer receivers are _more common_ than value receivers.
 
 ## Pointer receiver
 
