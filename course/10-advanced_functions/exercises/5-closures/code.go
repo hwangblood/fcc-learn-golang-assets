@@ -3,7 +3,13 @@ package main
 import "fmt"
 
 func adder() func(int) int {
-	// ?
+
+	sum := 0
+
+	return func(x int) int {
+		sum += x
+		return sum
+	}
 }
 
 // don't touch below this line
@@ -16,7 +22,11 @@ func test(bills []emailBill) {
 	defer fmt.Println("====================================")
 	countAdder, costAdder := adder(), adder()
 	for _, bill := range bills {
-		fmt.Printf("You've sent %d emails and it has cost you %d cents\n", countAdder(1), costAdder(bill.costInPennies))
+		fmt.Printf(
+			"You've sent %d emails and it has cost you %d cents\n",
+			countAdder(1),
+			costAdder(bill.costInPennies),
+		)
 	}
 }
 

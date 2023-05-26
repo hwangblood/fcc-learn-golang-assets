@@ -1,7 +1,5 @@
 {
   "question": "Can a closure mutate a variable outside its body?",
-  "answers": [
-    "Yes",
-    "No"
-  ]
+  "answers": ["Yes", "No"],
+  "result": "Yes"
 }
