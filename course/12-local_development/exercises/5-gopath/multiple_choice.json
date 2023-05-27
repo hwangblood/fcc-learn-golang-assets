@@ -1,8 +1,5 @@
 {
   "question": "Do you need to put your code inside of your GOPATH?",
-  "answers": [
-    "No, in fact you shouldn't",
-    "It doesn't matter",
-    "Yes"
-  ]
+  "answers": ["No, in fact you shouldn't", "It doesn't matter", "Yes"],
+  "result": "No, in fact you shouldn't"
 }

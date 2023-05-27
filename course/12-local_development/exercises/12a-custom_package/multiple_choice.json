@@ -5,5 +5,6 @@
     "It downloads it from Google's servers",
     "NPM hosts the files publicly",
     "It was fetched from Github"
-  ]
+  ],
+  "result": "We used the 'replace' keyword in go.mod to point it to the relative location of mystrings"
 }

@@ -4,5 +4,6 @@
     "A module path + package subdirectory",
     "An HTTP connection",
     "A RESTful server"
-  ]
+  ],
+  "result": "A module path + package subdirectory"
 }

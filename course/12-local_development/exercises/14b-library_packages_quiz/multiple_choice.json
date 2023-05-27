@@ -4,5 +4,6 @@
     "No, try to keep changes to internal functionality",
     "Yes, move fast and break things",
     "If the package is 'main' then yes"
-  ]
+  ],
+  "result": "No, try to keep changes to internal functionality"
 }

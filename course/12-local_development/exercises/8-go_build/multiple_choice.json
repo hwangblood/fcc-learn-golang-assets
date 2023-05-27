@@ -4,5 +4,6 @@
     "An executable file named 'hellogo'",
     "An executable file named main",
     "A package named cmd"
-  ]
+  ],
+  "result": "An executable file named 'hellogo'"
 }

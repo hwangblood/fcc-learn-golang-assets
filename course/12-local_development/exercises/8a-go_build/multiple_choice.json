@@ -4,5 +4,6 @@
     "'hello world' is printed",
     "The program panics",
     "The code compiles"
-  ]
+  ],
+  "result": "'hello world' is printed"
 }

@@ -4,5 +4,6 @@
     "Compiles and installs the program locally",
     "Installs dependencies",
     "Saves local code to the remote source control provider"
-  ]
+  ],
+  "result": "Compiles and installs the program locally"
 }
