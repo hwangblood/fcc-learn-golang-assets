@@ -1,9 +1,5 @@
 {
   "question": "Errors are...",
-  "answers": [
-    "Just values",
-    "Special",
-    "Exceptions",
-    "Something to be caught"
-  ]
+  "answers": ["Just values", "Special", "Exceptions", "Something to be caught"],
+  "result": "Just values"
 }
