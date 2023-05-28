@@ -7,7 +7,21 @@ import (
 )
 
 func logMessages(chEmails, chSms chan string) {
-	// ?
+	// when any channel is closed or empty, this infinite loop will be stopped
+	for {
+		select {
+		case email, ok := <-chEmails:
+			if !ok {
+				return
+			}
+			logEmail(email)
+		case sms, ok := <-chSms:
+			if !ok {
+				return
+			}
+			logSms(sms)
+		}
+	}
 }
 
 // TEST SUITE - Don't touch below this line

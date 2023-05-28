@@ -4,5 +4,6 @@
     "The receiver will block forever",
     "The sender will block forever",
     "Panic"
-  ]
+  ],
+  "result": "The receiver will block forever"
 }

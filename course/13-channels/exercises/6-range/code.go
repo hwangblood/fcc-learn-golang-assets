@@ -6,7 +6,15 @@ import (
 )
 
 func concurrrentFib(n int) {
-	// ?
+	intsChan := make(chan int)
+	go func() {
+		fibonacci(n, intsChan)
+	}()
+
+	// read from channel util it close or empty
+	for v := range intsChan {
+		fmt.Println(v)
+	}
 }
 
 // TEST SUITE - Don't touch below this line

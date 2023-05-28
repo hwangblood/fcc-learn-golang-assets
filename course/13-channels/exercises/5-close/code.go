@@ -6,7 +6,18 @@ import (
 )
 
 func countReports(numSentCh chan int) int {
-	// ?
+	numTotal := 0
+	for {
+		numSent, ok := <-numSentCh
+
+		// chech channel is empty or closed
+		if !ok {
+			break
+		}
+
+		numTotal += numSent
+	}
+	return numTotal
 }
 
 // TEST SUITE - Don't touch below this line
