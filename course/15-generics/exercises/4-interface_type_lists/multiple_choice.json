@@ -3,5 +3,6 @@
   "answers": [
     "You know exactly which types satisfy your interface",
     "It's too much trouble to define the methods required by your interface"
-  ]
+  ],
+  "result": "You know exactly which types satisfy your interface"
 }
