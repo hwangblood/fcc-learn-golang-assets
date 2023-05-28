@@ -13,10 +13,14 @@ type safeCounter struct {
 }
 
 func (sc safeCounter) inc(key string) {
+	sc.mux.Lock()
 	sc.slowIncrement(key)
+	sc.mux.Unlock() // prefer to use defer keyword
 }
 
 func (sc safeCounter) val(key string) int {
+	sc.mux.Lock()
+	defer sc.mux.Unlock()
 	return sc.counts[key]
 }
 

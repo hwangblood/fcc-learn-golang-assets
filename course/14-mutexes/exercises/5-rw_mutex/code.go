@@ -13,14 +13,16 @@ type safeCounter struct {
 }
 
 func (sc safeCounter) inc(key string) {
+	// * using read-write lock, when it locked, other readers still work, readers are not locked
 	sc.mux.Lock()
 	defer sc.mux.Unlock()
 	sc.slowIncrement(key)
 }
 
 func (sc safeCounter) val(key string) int {
-	sc.mux.Lock()
-	defer sc.mux.Unlock()
+	// * using read-only lock, so that we can't read resources at the same time
+	sc.mux.RLock()
+	defer sc.mux.RUnlock()
 	return sc.counts[key]
 }
 

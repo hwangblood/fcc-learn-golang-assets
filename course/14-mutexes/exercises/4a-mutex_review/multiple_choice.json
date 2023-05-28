@@ -5,5 +5,6 @@
     "To protect data from network access",
     "To stop other packages from using my code",
     "To encapsulate private data members of a struct"
-  ]
+  ],
+  "result": "To safely access a data structure concurrently"
 }
