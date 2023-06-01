@@ -18,5 +18,5 @@ After running the `rssagg` command, you'll see the outpu like this:
 
 ```shell
 Hello, Welcome to RSS Aggregator!
-Port:  8000
+Server starting at port: 8000
 ```
