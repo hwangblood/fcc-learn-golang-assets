@@ -6,23 +6,25 @@ In this project you'll practice building a RESTful API in Go, and you'll use pro
 
 ## Getting Started
 
+TODO https://youtu.be/un6ZyFkqFKo?list=PLR8IIoI7xe3wzxB_tdyhH5F6QXTRE7fKS&t=28612
+
 ### Setup Database
 
 ```shell
-docker volume create rssagg_data
+docker volume create rssagg-data
 
 docker run -d \
-        --name rssagg_data \
+        --name rssagg-data \
         -e POSTGRES_PASSWORD=foobarbaz \
-        -v rssagg-db:/var/lib/postgresql/data \
+        -e POSTGRES_DB=rssagg \
+        -v rssagg-data:/var/lib/postgresql/data \
         -p 5432:5432 \
         postgres:15.1-alpine
 
-cd sql/schema
-goose postgres postgres://postgres:foobarbaz@localhost:5432/ up
+pushd sql/schema
+goose postgres postgres://postgres:foobarbaz@localhost:5432/rssagg up
 
-# run at project root folder
-sqlc generate
+popd && sqlc generate
 ```
 
 ### Run Server

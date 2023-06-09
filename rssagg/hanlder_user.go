@@ -34,5 +34,14 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
+	responseWithJSON(w, 201, databaseUserToUser(user))
+}
+
+// this should be an authenticated endpoint
+func (apiCfg *apiConfig) handlerGetUser(
+	w http.ResponseWriter,
+	r *http.Request,
+	user database.User,
+) {
 	responseWithJSON(w, 200, databaseUserToUser(user))
 }
