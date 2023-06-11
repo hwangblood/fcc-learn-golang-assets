@@ -54,18 +54,16 @@ type DeleteFeedFollowParams struct {
 	UserID uuid.UUID
 }
 
+// only the follower can delete this feed follow record
 func (q *Queries) DeleteFeedFollow(ctx context.Context, arg DeleteFeedFollowParams) error {
 	_, err := q.db.ExecContext(ctx, deleteFeedFollow, arg.ID, arg.UserID)
 	return err
 }
 
 const getFeedFollow = `-- name: GetFeedFollow :one
-
-
 SELECT id, created_at, updated_at, user_id, feed_id FROM feed_follows WHERE id=$1
 `
 
-// only the follower can delete this feed follow record
 func (q *Queries) GetFeedFollow(ctx context.Context, id uuid.UUID) (FeedFollow, error) {
 	row := q.db.QueryRowContext(ctx, getFeedFollow, id)
 	var i FeedFollow

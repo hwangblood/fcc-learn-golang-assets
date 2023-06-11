@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -40,13 +41,16 @@ func main() {
 		log.Fatal("Can't connect to database:", dbErr)
 	}
 
-	queries := database.New(conn)
+	db := database.New(conn)
 	apiCfg := apiConfig{
-		DB: queries,
+		DB: db,
 	}
 
-	router := chi.NewRouter()
+	// run aggregation worker forever
+	go startScraping(db, 10, time.Minute)
 
+	// setup router
+	router := chi.NewRouter()
 	router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"https://*", "http://*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -55,26 +59,23 @@ func main() {
 		AllowCredentials: false,
 		MaxAge:           300,
 	}))
-
+	// setup routes
 	v1Router := chi.NewRouter()
 	v1Router.Get("/healthz", handlerReadiness)
 	v1Router.Get("/err", handlerErr)
-
-	// * users
+	// users
 	v1Router.Post("/users", apiCfg.handlerCreateUser)
 	v1Router.Get("/users", apiCfg.meddlewareAuth(apiCfg.handlerGetUser))
-
-	// * feeds
+	// feeds
 	v1Router.Post("/feeds", apiCfg.meddlewareAuth(apiCfg.handlerCreateFeed))
 	v1Router.Get("/feeds", apiCfg.handlerGetFeeds)
-
-	//* feed follows
+	// feed_follows
 	v1Router.Post("/feed_follows", apiCfg.meddlewareAuth(apiCfg.handlerCreateFeedFollow))
 	v1Router.Get("/feed_follows", apiCfg.meddlewareAuth(apiCfg.handlerGetFeedFollows))
 	v1Router.Delete("/feed_follows/{feedFollowID}", apiCfg.meddlewareAuth(apiCfg.handlerDeleteFeedFollow))
 
+	// setup server
 	router.Mount("/v1", v1Router)
-
 	srv := &http.Server{
 		Handler: router,
 		Addr:    ":" + portStr,
