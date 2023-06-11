@@ -70,6 +70,12 @@ func (apiCfg *apiConfig) handlerDeleteFeedFollow(
 		return
 	}
 
+	_, existErr := apiCfg.DB.GetFeedFollow(r.Context(), feedFollowID)
+	if existErr != nil {
+		responseWithError(w, 404, fmt.Sprintf("Couldn't find feed follow: %v", existErr))
+		return
+	}
+
 	deleteErr := apiCfg.DB.DeleteFeedFollow(r.Context(), database.DeleteFeedFollowParams{
 		ID:     feedFollowID,
 		UserID: user.ID,
