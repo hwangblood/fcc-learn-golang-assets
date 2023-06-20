@@ -55,5 +55,5 @@ func (apiCfg *apiConfig) handlerGetFeeds(
 		return
 	}
 
-	responseWithJSON(w, 201, databaseFeedsToFeeds(feeds))
+	responseWithJSON(w, 200, databaseFeedsToFeeds(feeds))
 }

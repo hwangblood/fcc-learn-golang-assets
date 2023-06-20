@@ -53,9 +53,7 @@ func (apiCfg *apiConfig) handlerGetFeedFollows(
 		responseWithError(w, 400, fmt.Sprintf("Couldn't get feed follows: %v", err))
 		return
 	}
-
-	// FIXME: change to 200 status code
-	responseWithJSON(w, 201, databaseFeedFollowsToFeedFollows(feedFollows))
+	responseWithJSON(w, 200, databaseFeedFollowsToFeedFollows(feedFollows))
 }
 
 func (apiCfg *apiConfig) handlerDeleteFeedFollow(
