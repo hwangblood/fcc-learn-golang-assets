@@ -69,6 +69,8 @@ func main() {
 	// feeds
 	v1Router.Post("/feeds", apiCfg.meddlewareAuth(apiCfg.handlerCreateFeed))
 	v1Router.Get("/feeds", apiCfg.handlerGetFeeds)
+	// posts
+	v1Router.Get("/posts", apiCfg.meddlewareAuth(apiCfg.handlerGetPostsForUser))
 	// feed_follows
 	v1Router.Post("/feed_follows", apiCfg.meddlewareAuth(apiCfg.handlerCreateFeedFollow))
 	v1Router.Get("/feed_follows", apiCfg.meddlewareAuth(apiCfg.handlerGetFeedFollows))

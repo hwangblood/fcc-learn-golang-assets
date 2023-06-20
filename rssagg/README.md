@@ -6,15 +6,13 @@ In this project you'll practice building a RESTful API in Go, and you'll use pro
 
 ## Getting Started
 
-TODO https://youtu.be/un6ZyFkqFKo?list=PLR8IIoI7xe3wzxB_tdyhH5F6QXTRE7fKS&t=28612
-
 ### Setup Database
 
 ```shell
 docker volume create rssagg-data
 
 docker run -d \
-        --name rssagg-data \
+        --name rssagg-db \
         -e POSTGRES_PASSWORD=foobarbaz \
         -e POSTGRES_DB=rssagg \
         -v rssagg-data:/var/lib/postgresql/data \
@@ -32,9 +30,9 @@ popd && sqlc generate
 - Copy `.env` from `.env.example`, then install and run it
 
 ```shell
-$ go install github.com/hwangblood/fcc-learn-golang-assets/rssagg
-$ export PORT=8000
-$ rssagg
+go install github.com/hwangblood/fcc-learn-golang-assets/rssagg
+export PORT=8000
+rssagg
 ```
 
 After running the `rssagg` command, you'll see the outpu like this:

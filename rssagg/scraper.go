@@ -2,10 +2,13 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"log"
+	"strings"
 	"sync"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/internal/database"
 )
 
@@ -56,6 +59,37 @@ func scrapeFeed(db *database.Queries, wg *sync.WaitGroup, feedToFetch database.F
 
 	for _, item := range rssFeed.Channel.Items {
 		log.Printf("Found post %s on feed %s.\n", item.Title, feedToFetch.Name)
+
+		description := sql.NullString{}
+		if item.Description != "" {
+			description.String = item.Description
+			description.Valid = true
+		}
+
+		pubAt, err := time.Parse(time.RFC1123Z, item.PubDate)
+		if err != nil {
+			log.Printf("Could not parse date %v with error: %v\n", item.PubDate, err)
+			continue
+		}
+
+		_, err = db.CreatePost(context.Background(), database.CreatePostParams{
+			ID:          uuid.New(),
+			CreatedAt:   time.Now().UTC(),
+			UpdatedAt:   time.Now().UTC(),
+			Title:       item.Title,
+			Description: description,
+			PublishedAt: pubAt,
+			Url:         item.Link,
+			FeedID:      feedToFetch.ID,
+		})
+		if err != nil {
+			// Ignore the duplicate key error for "posts_url_key", we don't want to restore the same link
+			// pq: duplicate key value violates unique constraint "posts_url_key"
+			if strings.Contains(err.Error(), "duplicate key") {
+				continue
+			}
+			log.Fatalln("failed to create post:", err)
+		}
 	}
 
 	log.Printf("Feed %s collected, %d posts found.\n", feedToFetch.Name, len(rssFeed.Channel.Items))

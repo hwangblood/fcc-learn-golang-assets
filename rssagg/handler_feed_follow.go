@@ -54,6 +54,7 @@ func (apiCfg *apiConfig) handlerGetFeedFollows(
 		return
 	}
 
+	// FIXME: change to 200 status code
 	responseWithJSON(w, 201, databaseFeedFollowsToFeedFollows(feedFollows))
 }
 
