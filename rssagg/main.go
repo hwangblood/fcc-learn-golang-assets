@@ -12,6 +12,7 @@ import (
 	"github.com/go-chi/cors"
 	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/api"
 	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/internal/database"
+	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/routes"
 	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/scraper"
 	"github.com/joho/godotenv"
 
@@ -57,22 +58,25 @@ func main() {
 		AllowCredentials: false,
 		MaxAge:           300,
 	}))
+
 	// setup routes
+	routesCaller := routes.New(&apiCfg)
+
 	v1Router := chi.NewRouter()
-	v1Router.Get("/healthz", api.HandleReadiness)
-	v1Router.Get("/err", api.HandleErr)
+	v1Router.Get("/healthz", routesCaller.Healthz())
+	v1Router.Get("/err", routesCaller.Err())
 	// users
-	v1Router.Post("/users", apiCfg.HandleCreateUser)
-	v1Router.Get("/users", apiCfg.MiddlewareAuth(apiCfg.HandleGetUser))
+	v1Router.Post("/users", routesCaller.CreateUser())
+	v1Router.Get("/users", routesCaller.GetUser())
 	// feeds
-	v1Router.Post("/feeds", apiCfg.MiddlewareAuth(apiCfg.HandleCreateFeed))
-	v1Router.Get("/feeds", apiCfg.HandleGetFeeds)
+	v1Router.Post("/feeds", routesCaller.CreateFeed())
+	v1Router.Get("/feeds", routesCaller.GetFeeds())
 	// posts
-	v1Router.Get("/posts", apiCfg.MiddlewareAuth(apiCfg.HandleGetPostsForUser))
+	v1Router.Get("/posts", routesCaller.GetPostsForUser())
 	// feed_follows
-	v1Router.Post("/feed_follows", apiCfg.MiddlewareAuth(apiCfg.HandleCreateFeedFollow))
-	v1Router.Get("/feed_follows", apiCfg.MiddlewareAuth(apiCfg.HandleGetFeedFollows))
-	v1Router.Delete("/feed_follows/{feedFollowID}", apiCfg.MiddlewareAuth(apiCfg.HandleDeleteFeedFollow))
+	v1Router.Post("/feed_follows", routesCaller.CreateFeedFollow())
+	v1Router.Get("/feed_follows", routesCaller.GetFeedFollows())
+	v1Router.Delete("/feed_follows/{feedFollowID}", routesCaller.DeleteFeedFollow())
 
 	// setup server
 	router.Mount("/v1", v1Router)

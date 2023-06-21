@@ -27,4 +27,5 @@ func (apiCfg *ApiConfig) MiddlewareAuth(handler authedHandler) http.HandlerFunc 
 
 		handler(w, r, user)
 	}
+	
 }
