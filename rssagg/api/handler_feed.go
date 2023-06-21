@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"encoding/json"
@@ -8,9 +8,11 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/internal/database"
+	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/models"
+	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/reswrapper"
 )
 
-func (apiCfg *apiConfig) handlerCreateFeed(
+func (apiCfg *ApiConfig) HandleCreateFeed(
 	w http.ResponseWriter,
 	r *http.Request,
 	user database.User,
@@ -24,7 +26,7 @@ func (apiCfg *apiConfig) handlerCreateFeed(
 	params := parameters{}
 	err := decoder.Decode(&params)
 	if err != nil {
-		responseWithError(w, 400, fmt.Sprintf("Error parsing JSON: %v", err))
+		reswrapper.ResponseWithError(w, 400, fmt.Sprintf("Error parsing JSON: %v", err))
 		return
 	}
 
@@ -37,23 +39,23 @@ func (apiCfg *apiConfig) handlerCreateFeed(
 		UserID:    user.ID,
 	})
 	if err != nil {
-		responseWithError(w, 400, fmt.Sprintf("Couldn't create user: %v", err))
+		reswrapper.ResponseWithError(w, 400, fmt.Sprintf("Couldn't create user: %v", err))
 		return
 	}
 
-	responseWithJSON(w, 201, databaseFeedToFeed(feed))
+	reswrapper.ResponseWithJSON(w, 201, models.DatabaseFeedToFeed(feed))
 }
 
-func (apiCfg *apiConfig) handlerGetFeeds(
+func (apiCfg *ApiConfig) HandleGetFeeds(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
 
 	feeds, err := apiCfg.DB.GetFeeds(r.Context())
 	if err != nil {
-		responseWithError(w, 400, fmt.Sprintf("Couldn't create user: %v", err))
+		reswrapper.ResponseWithError(w, 400, fmt.Sprintf("Couldn't create user: %v", err))
 		return
 	}
 
-	responseWithJSON(w, 200, databaseFeedsToFeeds(feeds))
+	reswrapper.ResponseWithJSON(w, 200, models.DatabaseFeedsToFeeds(feeds))
 }

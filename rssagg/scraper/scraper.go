@@ -1,4 +1,4 @@
-package main
+package scraper
 
 import (
 	"context"
@@ -13,7 +13,7 @@ import (
 )
 
 // fetch different RSS feeds and download all of their blog posts at the same time, it should be long-running job, never return
-func startScraping(
+func StartScraping(
 	db *database.Queries,
 	concurrency int, // the number of goroutines to do the scraping RSS feeds with the same number
 	timeBetweenRequest time.Duration, // time between each request to go scrape a new rss feed
@@ -33,7 +33,7 @@ func startScraping(
 		wg := &sync.WaitGroup{}
 		for _, feedToFetch := range feedsToFetch {
 			wg.Add(1) // fetch the feed in a individually goroutine
-			go scrapeFeed(db, wg, feedToFetch)
+			go ScrapeFeed(db, wg, feedToFetch)
 		}
 		wg.Wait() // only go to next for-loop, when the scraping is completed
 
@@ -42,7 +42,7 @@ func startScraping(
 
 }
 
-func scrapeFeed(db *database.Queries, wg *sync.WaitGroup, feedToFetch database.Feed) {
+func ScrapeFeed(db *database.Queries, wg *sync.WaitGroup, feedToFetch database.Feed) {
 	defer wg.Done()
 
 	_, err := db.MarkFeedAsFetched(context.Background(), feedToFetch.ID)

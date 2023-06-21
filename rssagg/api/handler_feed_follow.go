@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"encoding/json"
@@ -9,9 +9,11 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/google/uuid"
 	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/internal/database"
+	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/models"
+	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/reswrapper"
 )
 
-func (apiCfg *apiConfig) handlerCreateFeedFollow(
+func (apiCfg *ApiConfig) HandleCreateFeedFollow(
 	w http.ResponseWriter,
 	r *http.Request,
 	user database.User,
@@ -24,7 +26,7 @@ func (apiCfg *apiConfig) handlerCreateFeedFollow(
 	params := parameters{}
 	err := decoder.Decode(&params)
 	if err != nil {
-		responseWithError(w, 400, fmt.Sprintf("Error parsing JSON: %v", err))
+		reswrapper.ResponseWithError(w, 400, fmt.Sprintf("Error parsing JSON: %v", err))
 		return
 	}
 
@@ -36,27 +38,34 @@ func (apiCfg *apiConfig) handlerCreateFeedFollow(
 		FeedID:    params.FeedID,
 	})
 	if err != nil {
-		responseWithError(w, 400, fmt.Sprintf("Couldn't create feed follow: %v", err))
+		reswrapper.ResponseWithError(w, 400, fmt.Sprintf("Couldn't create feed follow: %v", err))
 		return
 	}
 
-	responseWithJSON(w, 201, databaseFeedFollowToFeedFollow(feedFollow))
+	reswrapper.ResponseWithJSON(
+		w, 201,
+		models.DatabaseFeedFollowToFeedFollow(feedFollow),
+	)
 }
 
-func (apiCfg *apiConfig) handlerGetFeedFollows(
+func (apiCfg *ApiConfig) HandleGetFeedFollows(
 	w http.ResponseWriter,
 	r *http.Request,
 	user database.User,
 ) {
 	feedFollows, err := apiCfg.DB.GetFeedFollows(r.Context(), user.ID)
 	if err != nil {
-		responseWithError(w, 400, fmt.Sprintf("Couldn't get feed follows: %v", err))
+		reswrapper.ResponseWithError(w, 400, fmt.Sprintf("Couldn't get feed follows: %v", err))
 		return
 	}
-	responseWithJSON(w, 200, databaseFeedFollowsToFeedFollows(feedFollows))
+
+	reswrapper.ResponseWithJSON(
+		w, 200,
+		models.DatabaseFeedFollowsToFeedFollows(feedFollows),
+	)
 }
 
-func (apiCfg *apiConfig) handlerDeleteFeedFollow(
+func (apiCfg *ApiConfig) HandleDeleteFeedFollow(
 	w http.ResponseWriter,
 	r *http.Request,
 	user database.User,
@@ -65,13 +74,13 @@ func (apiCfg *apiConfig) handlerDeleteFeedFollow(
 
 	feedFollowID, paramErr := uuid.Parse(feedFollowIDStr)
 	if paramErr != nil {
-		responseWithError(w, 400, fmt.Sprintf("Couldn't parse feed follow id: %v", paramErr))
+		reswrapper.ResponseWithError(w, 400, fmt.Sprintf("Couldn't parse feed follow id: %v", paramErr))
 		return
 	}
 
 	_, existErr := apiCfg.DB.GetFeedFollow(r.Context(), feedFollowID)
 	if existErr != nil {
-		responseWithError(w, 404, fmt.Sprintf("Couldn't find feed follow: %v", existErr))
+		reswrapper.ResponseWithError(w, 404, fmt.Sprintf("Couldn't find feed follow: %v", existErr))
 		return
 	}
 
@@ -80,9 +89,9 @@ func (apiCfg *apiConfig) handlerDeleteFeedFollow(
 		UserID: user.ID,
 	})
 	if deleteErr != nil {
-		responseWithError(w, 400, fmt.Sprintf("Couldn't delete feed follow: %v", deleteErr))
+		reswrapper.ResponseWithError(w, 400, fmt.Sprintf("Couldn't delete feed follow: %v", deleteErr))
 		return
 	}
 
-	responseWithJSON(w, 200, struct{}{})
+	reswrapper.ResponseWithJSON(w, 200, struct{}{})
 }

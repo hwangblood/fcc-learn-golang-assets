@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"encoding/json"
@@ -8,9 +8,11 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/internal/database"
+	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/models"
+	"github.com/hwangblood/fcc-learn-golang-assets/rssagg/reswrapper"
 )
 
-func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Request) {
+func (apiCfg *ApiConfig) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
 		Name string `json:"name"`
 	}
@@ -19,7 +21,7 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 	params := parameters{}
 	err := decoder.Decode(&params)
 	if err != nil {
-		responseWithError(w, 400, fmt.Sprintf("Error parsing JSON: %v", err))
+		reswrapper.ResponseWithError(w, 400, fmt.Sprintf("Error parsing JSON: %v", err))
 		return
 	}
 
@@ -30,23 +32,23 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 		UpdatedAt: time.Now().UTC(),
 	})
 	if err != nil {
-		responseWithError(w, 400, fmt.Sprintf("Couldn't create user: %v", err))
+		reswrapper.ResponseWithError(w, 400, fmt.Sprintf("Couldn't create user: %v", err))
 		return
 	}
 
-	responseWithJSON(w, 201, databaseUserToUser(user))
+	reswrapper.ResponseWithJSON(w, 201, models.DatabaseUserToUser(user))
 }
 
 // this should be an authenticated endpoint
-func (apiCfg *apiConfig) handlerGetUser(
+func (apiCfg *ApiConfig) HandleGetUser(
 	w http.ResponseWriter,
 	r *http.Request,
 	user database.User,
 ) {
-	responseWithJSON(w, 200, databaseUserToUser(user))
+	reswrapper.ResponseWithJSON(w, 200, models.DatabaseUserToUser(user))
 }
 
-func (apiCfg *apiConfig) handlerGetPostsForUser(
+func (apiCfg *ApiConfig) HandleGetPostsForUser(
 	w http.ResponseWriter,
 	r *http.Request,
 	user database.User,
@@ -56,8 +58,8 @@ func (apiCfg *apiConfig) handlerGetPostsForUser(
 		Limit:  10, // TODO: limit from url query parameters
 	})
 	if err != nil {
-		responseWithError(w, 400, fmt.Sprintf("Couldn't get posts: %v", err))
+		reswrapper.ResponseWithError(w, 400, fmt.Sprintf("Couldn't get posts: %v", err))
 		return
 	}
-	responseWithJSON(w, 200, databasePostsToPosts(posts))
+	reswrapper.ResponseWithJSON(w, 200, models.DatabasePostsToPosts(posts))
 }
